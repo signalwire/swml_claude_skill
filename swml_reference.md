@@ -2101,7 +2101,7 @@ Join an ad-hoc audio conference with RELAY and CXML calls.
 - **start_on_enter**: Optional boolean, default `true`
 - **end_on_exit**: Optional boolean, default `false`
 - **wait_url**: Optional SWML URL. default hold music
-- **max_participants**: Optional positive integer <= 250. Default 250 (TBD check SignalWire docs)
+- **max_participants**: Optional positive integer <= 250. Default 250 (confirmed by SignalWire support, ticket 60006, 2026-08-22: maximum participants for SWML conferences is 250)
 - **record**: Optional string [`do-not-record`, `record-from-start`]. Default `do-not-record`
 - **region**: Optional string. Default not set
 - **trim**: Optional string [`trim-silence`, `do-not-trim`]. Default `trim-silence`
