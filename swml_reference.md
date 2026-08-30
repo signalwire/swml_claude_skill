@@ -3478,7 +3478,7 @@ FST-based text normalization using NeMo grammars (~18ms, no LLM needed). Mutuall
 **Session End (`hard_stop_time`):**
 - `hard_stop_time` cuts off inbound speech intake, but the AI finishes what it is saying and processes `hard_stop_prompt` (or says a default goodbye if none is set) before hanging up — it is not an instant disconnect at the timestamp. For an instant cutoff, use [`answer.max_duration`](#answer-max_duration) (confirmed by SignalWire support, ticket 60006, 2026-08-22/23).
 - When the AI exits, the call continues with any SWML methods after `ai`; if there are none, both legs are disconnected (same ticket).
-- Runaway protection: layer `hard_stop_time` with `answer` / `connect` `max_duration` (both default to 14400 seconds — 4 hours) plus an external reaper. List Voice Logs is the supported API for enumerating active SWML/AI calls, and its `id` is accepted by `calling.end` (Send Call Commands); Compatibility `GET /Calls` does not return SWML/AI calls (same ticket).
+- Runaway protection: layer `hard_stop_time` with `answer` / `connect` `max_duration` (both default to 14400 seconds — 4 hours, which is also the platform maximum: 14400 is the largest accepted `max_duration`, and `hard_stop_time` values beyond it are inert — confirmed by SignalWire support, ticket 60974, 2026-08-30) plus an external reaper. List Voice Logs is the supported API for enumerating active SWML/AI calls, and its `id` is accepted by `calling.end` (Send Call Commands); Compatibility `GET /Calls` does not return SWML/AI calls (same ticket).
 
 #### Variables
 
