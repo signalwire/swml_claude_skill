@@ -3366,8 +3366,8 @@ FST-based text normalization using NeMo grammars (~18ms, no LLM needed). Mutuall
 | `wait_for_user` | boolean | false | Wait for user to speak first |
 | `static_greeting` | string | — | Fixed greeting spoken immediately (skips LLM for first utterance) |
 | `static_greeting_no_barge` | boolean | false | Prevent user from interrupting the static greeting |
-| `hard_stop_time` | string | — | Absolute or relative time when session must end (e.g. `"1h30m"`, `"14:30"`) |
-| `hard_stop_prompt` | string | built-in | Prompt sent to LLM when hard stop time is reached |
+| `hard_stop_time` | string | — | Absolute or relative time when session must end (e.g. `"1h30m"`, `"14:30"`). Not an instant disconnect — see [Parameter Interactions](#parameter-interactions) |
+| `hard_stop_prompt` | string | built-in | Prompt sent to LLM when hard stop time is reached, processed before hangup |
 | `initial_sleep_ms` | integer | 0 | 0–300000. Delay in ms before AI starts processing |
 | `hold_music` | string | — | Audio file for hold music. Prefix with `tone:` for tone_stream |
 | `hold_on_process` | boolean | false | Play hold music while processing LLM responses |
@@ -3474,6 +3474,11 @@ FST-based text normalization using NeMo grammars (~18ms, no LLM needed). Mutuall
 
 **Outbound Calls:**
 - `direction` set to `"outbound"` uses `outbound_attention_timeout` instead of `attention_timeout`.
+
+**Session End (`hard_stop_time`):**
+- `hard_stop_time` cuts off inbound speech intake, but the AI finishes what it is saying and processes `hard_stop_prompt` (or says a default goodbye if none is set) before hanging up — it is not an instant disconnect at the timestamp. For an instant cutoff, use [`answer.max_duration`](#answer-max_duration) (confirmed by SignalWire support, ticket 60006, 2026-08-22/23).
+- When the AI exits, the call continues with any SWML methods after `ai`; if there are none, both legs are disconnected (same ticket).
+- Runaway protection: layer `hard_stop_time` with `answer` / `connect` `max_duration` (both default to 14400 seconds — 4 hours) plus an external reaper. List Voice Logs is the supported API for enumerating active SWML/AI calls, and its `id` is accepted by `calling.end` (Send Call Commands); Compatibility `GET /Calls` does not return SWML/AI calls (same ticket).
 
 #### Variables
 
