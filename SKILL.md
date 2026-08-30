@@ -2,6 +2,7 @@
 name: swml
 description: Craft SWML (SignalWire Markup Language) documents for voice and video call control and messaging. Use when building IVR menus, AI agents, call routing, recording, conferencing, or any telephony automation.
 allowed-tools: Read, Grep, Glob
+license: MIT
 ---
 
 # SWML (SignalWire Markup Language)
