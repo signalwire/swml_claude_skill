@@ -1,6 +1,6 @@
 # SignalWire ML (SWML)
 
-SignalWire ML (SWML) is the RELAY equivalent of LaML. The script native format is JSON, but can also be specified in YAML for human readability.
+SignalWire ML (SWML) is SignalWire's markup language for controlling calls and messages. The script native format is JSON, but can also be specified in YAML for human readability.
 
 ## Document fetching
 
@@ -1040,7 +1040,6 @@ Answer call and set optional maximum duration
 
 - **max_duration:** Optional maximum duration in seconds. Can not be less than 7 seconds. Default is 14400 seconds (4 hours).
 - **codecs:** String, Optional. Comma-separated string of codecs to offer. Has no effect if a codec is not supported by the network. Default is picked by SignalWire. Valid codecs are: `PCMU,PCMA,G722,G729,AMR-WB,OPUS,VP8,H264`
-- **fsvars:** Object, Optional. FreeSWITCH variables to set on the channel.
 - **username:** String, Optional. Username for SIP requests that require authentication.
 - **password:** String, Optional. Password for SIP requests that require authentication.
 
@@ -3343,7 +3342,6 @@ The `params` object provides detailed control over AI agent behavior.
 | `conscience` / `strict_mode` | string/bool | model default | AI safety. `false` = disabled, `true` = model built-in, string = custom prompt |
 | `enable_thinking` | boolean | false | Enable extended thinking — LLM reasons step-by-step before responding |
 | `enable_inner_dialog` | boolean | false | Enable inner dialog reasoning pass before spoken response |
-| `inner_dialog_synced` | boolean | false | Synchronize inner dialog with main conversation flow |
 | `inner_dialog_prompt` | string | built-in | Custom system prompt for the inner dialog model |
 | `auto_correct` | boolean | false | Use LLM to clean up ASR text. Mutually exclusive with `enable_text_normalization` |
 | `redact_prompt` | string | — | Prompt for redacting sensitive information from logs |
@@ -3424,7 +3422,6 @@ FST-based text normalization using NeMo grammars (~18ms, no LLM needed). Mutuall
 | `save_conversation` | boolean | false | Persist conversation history. Requires `conversation_id` |
 | `transfer_summary` | boolean | false | Include conversation summary when transferring calls |
 | `summary_mode` | string | — | Summary format: `"string"` = plain text, `"original"` = original format |
-| `enable_accounting` | boolean | false | Enable usage tracking and billing |
 | `persist_global_data` | boolean | false | Persist `global_data` across sessions (via `conversation_id`) |
 
 ##### SWAIG Permissions
@@ -3437,17 +3434,10 @@ FST-based text normalization using NeMo grammars (~18ms, no LLM needed). Mutuall
 | `swaig_set_global_data` | boolean | false | Allow SWAIG functions to set global data |
 | `swaig_post_swml_vars` | object | — | SWML variables to include in SWAIG function POST data |
 
-##### Cache
-
-| Parameter | Type | Default | Description |
-|---|---|---|---|
-| `cache_mode` | boolean | false | Enable TTS audio caching to avoid re-generating identical utterances |
-
 ##### Debug & Monitoring
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `debug` | int/bool | 0 | Debug level. `true` = 1, integer = specific level |
 | `debug_webhook_url` | string | — | URL to receive debug event webhooks |
 | `debug_webhook_level` | integer | 0 | 0–2. Verbosity of debug webhook events |
 
